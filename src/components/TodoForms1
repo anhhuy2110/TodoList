@@ -1,0 +1,27 @@
+import React from 'react';
+import { useForm } from 'react-hook-form';
+
+interface TodoFormData {
+  text: string;
+  description: string;
+}
+
+interface TodoFormProps {
+  addTodo: AddTodo;
+}
+
+export const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
+  const { register, handleSubmit } = useForm<TodoFormData>();
+
+  const onSubmit = handleSubmit((data: TodoFormData) => {
+    addTodo(data.text, data.description);
+  });
+
+  return (
+    <form onSubmit={onSubmit}>
+      <input type="text" {...register('text')} placeholder='Type your task' />
+      <input type="text" {...register('description')} placeholder='Type your description' />
+      <button type="submit">Add Task</button>
+    </form>
+  );
+};
